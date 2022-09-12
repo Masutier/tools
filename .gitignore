@@ -1,7 +1,4 @@
 .env
 venv
 venv/*
-
-
-
 settings.yaml
