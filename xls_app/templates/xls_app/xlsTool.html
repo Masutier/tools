@@ -1,0 +1,37 @@
+{% extends 'tooling/layout.html' %}
+
+{% block content %}
+    
+<div class="col-11 mx-auto mb-5">
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <h1>Manipular Archivos Excel</h1>
+        <h4>XLSX API Para adicionar columnas (y filas) con nuevos datos</h4>
+    </div>
+
+    <div class="col-11 mx-auto">
+        <div class="col-8 mx-auto mt-5 c">
+            <a class="btn btn-primary btn-sm btn-color " href="/excelTable">Tabla General</a>
+            <a class="btn btn-primary btn-sm btn-color ms-2" href="/duplicates">Duplicados</a>
+            {% if records < 1 %}
+            <a class="btn btn-primary btn-sm btn-color ms-5" href="/createNewXls">Crear nueva tabla</a>
+            {% else %}
+            <a class="btn btn-primary btn-sm btn-color ms-5" href="/createAddXls">Agregar una columna</a>
+            <a class="btn btn-primary btn-sm btn-color ms-2" href="/delColXls">Borrar una columna</a>
+            <a class="btn btn-primary btn-sm btn-color ms-2" href="/delXls">Borrar y comenzar de cero</a>
+            {% endif %}
+        </div>
+
+        <div class="col-11 mt-4">
+            <div class="col-10 mx-auto mb-2">
+                <h3>Tabla Corta</h3>
+                <p>* Solo se muestran {{ nrowsx }} de {{ records }} filas</p>
+            </div>
+        </div>
+
+        <div class="col-11 mx-auto mt-4">
+            {% include 'xls_app/partials/table.html' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

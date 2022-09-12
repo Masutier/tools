@@ -1,0 +1,67 @@
+{% extends 'tooling/layout.html' %}
+
+{% block content %}
+    
+<div class="container mb-5">
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <h1>Manipular Archivos Excel</h1>
+        <h4>XLSX API Para adicionar columnas (y filas) con nuevos datos</h4>
+    </div>
+
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <h3>Crear un Nuevo Proyecto</h3>
+        <p>Subir dos archivos excel de los primeros meses a calcular</p>
+    </div>
+
+    <hr>
+
+    <div class="col-11 mx-auto mt-5">
+        <div class="row">
+            <div class="col-7 mx-auto mb-3">
+                <h3>Ingrese los Dos Archivos</h3>
+                <form action="/createNewXls" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="inputFirstXlsx" class="form-label">Ingrese Archivo .xlsx a Procesar</label>
+                        <input class="form-control" type="file" name="inputFirstXlsx">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputFirstNameXlsx" class="form-label">Ingrese Nombre de la Columna a crear</label>
+                        <input class="form-control" type="text" name="inputFirstNameXlsx">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputSecondXlsx" class="form-label">Ingrese Archivo .xlsx a Procesar</label>
+                        <input class="form-control" type="file" name="inputSecondXlsx">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputSecondNameXlsx" class="form-label">Ingrese Nombre de segunda Columna a crear</label>
+                        <input class="form-control" type="text" name="inputSecondNameXlsx">
+                    </div>
+                    <button id="butSpin" class="btn btn-primary btn-sm btn-color mt-3" type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="col-4">
+                <div class="col-11 mx-auto mb-3">
+                    <h3>Algunas recomendaciones</h3>
+                    <p>El nombre del archivo deve ser .xlsx</p>
+                    <p>Se sugiere que el archivo .xlsx a subir solo contenga la pestana del mes que se requiere</p>
+                    <p>Por efectos de lectura se sugiere que los archivos se suban en orden por mes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="spin" class="col-10 mx-auto color_blue mt-3 c borde">
+        <div class="spinner ">
+            <h1>Loading</h1>
+            <h3>Please whait, this may take some time</h3>
+        </div>
+    </div>
+
+</div>
+
+<script src="../../static/js/spinner.js"></script>
+
+{% endblock %}

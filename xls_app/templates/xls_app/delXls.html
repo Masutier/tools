@@ -1,0 +1,50 @@
+{% extends 'tooling/layout.html' %}
+
+{% block content %}
+    
+<div class="col-11 mx-auto mb-5">
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <h1>Manipular Archivos Excel</h1>
+        <h4>XLSX API Para adicionar columnas (y filas) con nuevos datos</h4>
+    </div>
+
+
+    <div class="col-11 mx-auto">
+
+        <h3>Borrar el projyecto</h3>
+        <p>Esta accion borrara definitivamente el archivo .xlsx en la carpeta para crear uno nuevo</p>
+    </div>
+
+    <div class="col-4 mx-auto mt-3 mb-5">
+        <h3>Eliminar el archivo xlsx_All.xlsx</h3>
+        <form action="/delXls" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="inputFile" class="form-label">Ingrese el nombre del archivo "xlsx_All.xlsx" para eliminarlo</label>
+                <input class="form-control" type="text" name="inputFile">
+            </div>
+            <button type="button" class="btn btn-primary btn-sm btn-color" id="liveToastBtn">Eliminar</button>
+
+            <!-- PopUp para eliminar registro -->
+            <div class="d-flex justify-content-center align-items-center w-100 mt-5">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                    <div class="toast-header">
+                        <strong class="me-auto fontdelete">XLS</strong>
+                    </div>
+                    <div class="toast-body atxt3">
+                        Esta seguro de <strong>ELIMINAR</strong> todo?
+                        <div class="mt-2 pt-2 border-top">
+                            <button class="btn btn-primary btn-sm btn-color" type="submit">Submit</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-color" data-bs-dismiss="toast">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+<script src="../../../static/js/deleteButtom.js"></script>
+
+{% endblock %}

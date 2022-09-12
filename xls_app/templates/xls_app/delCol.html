@@ -1,0 +1,58 @@
+{% extends 'tooling/layout.html' %}
+{% load static %}
+{% block content %}
+    
+<div class="col-11 mx-auto mb-5">
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <h1>Manipular Archivos Excel</h1>
+        <h3>Xlsx API Para monitorear los reportes de clicks en los flujos</h3>
+    </div>
+
+    <div class="col-11 mx-auto">
+        <div class="row">
+            <div class="col-8">
+                <div class="col-11 mx-auto mt-3 mb-5">
+                    <h1>Tabla Xlsx</h1>
+                    <p>* Solo se muestran 7 filas</p>
+                </div>
+                
+                {% include 'xls_app/partials/table.html' %}
+
+            </div>
+
+            <div class="col-4 mx-auto mt-5 mb-5">
+                <h3>Columna a eliminar</h3>
+                <form action="/delColXls" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="inputColumn" class="form-label">Ingrese el nombre de la columna que quiere borrar identico a como esta en la tabla</label>
+                        <input class="form-control" type="text" name="inputColumn">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm btn-color" id="liveToastBtn">Eliminar</button>
+
+                    <!-- PopUp para eliminar registro -->
+                    <div class="d-flex justify-content-center align-items-center w-100 mt-5">
+                        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                            <div class="toast-header">
+                                <strong class="me-auto fontdelete">XLS</strong>
+                            </div>
+                            <div class="toast-body atxt3">
+                                Esta seguro de <strong>ELIMINAR</strong> la columna?
+                                <div class="mt-2 pt-2 border-top">
+                                    <button class="btn btn-primary btn-sm btn-color" type="submit">Submit</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-color" data-bs-dismiss="toast">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../../static/js/deleteButtom.js"></script>
+
+{% endblock %}
+

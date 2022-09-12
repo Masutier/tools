@@ -1,0 +1,55 @@
+{% extends 'tooling/layout.html' %}
+
+{% block content %}
+    
+<div class="container mb-5">
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <h1>Manipular Archivos Excel</h1>
+        <h4>XLSX Para adicionar columnas (y filas) con nuevos datos</h4>
+    </div>
+
+    <div class="col-11 mx-auto mt-5 mb-5 c">
+        <p>Subir un archivo para anexar al ya existente xlsx_ALL.xlsx</p>
+    </div>
+
+    <hr>
+
+    <div class="col-11 mx-auto mt-5">
+        <div class="row">
+            <div class="col-7 mx-auto mb-3">
+                <h3>Ingrese el Archivo a adicionar</h3>
+                <form action="/createAddXls" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="inputXlsx" class="form-label">Ingrese Archivo .xlsx a Procesar</label>
+                        <input class="form-control" type="file" name="inputXlsx">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputNameXlsx" class="form-label">Ingrese Nombre de la columna a crear</label>
+                        <input class="form-control" type="text" name="inputNameXlsx">
+                    </div>
+                    <button id="butSpin" class="btn btn-primary btn-sm btn-color mt-3" type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="col-4">
+                <div class="col-11 mx-auto mb-3">
+                    <h3>Algunas recomendaciones</h3>
+                    <p>El nombre de la pestana a montar usualmente es el nombre del mes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="spin" class="col-10 mx-auto color_blue mt-3 c borde">
+        <div class="spinner ">
+            <h1>Loading</h1>
+            <h3>Please whait, this may take some time</h3>
+        </div>
+    </div>
+
+</div>
+
+<script src="../../static/js/spinner.js"></script>
+
+{% endblock %}

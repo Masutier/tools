@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django PDF</title>
+    <style>
+        th, td{
+            padding: 5px 15px;
+        }
+        th{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        td{
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;" >Lista de personas y sus empleos</h1>
+    <div class="col-8 mx-auto">
+        <table>
+            <thead>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <th>Nombre</th>
+                    <th>Empleo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for emp in empInfo %}
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td>{{ emp.name }}</td>
+                        <td>{{ emp.job }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>         
+</body>
+</html>

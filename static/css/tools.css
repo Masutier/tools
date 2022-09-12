@@ -1,0 +1,11 @@
+.imgico{
+    width: 80px;
+    height: auto;
+    vertical-align: middle;
+    border-style: none;
+    -webkit-margin-bottom-collapse: initial;
+    margin-right: 30PX;
+    padding-top: 2px;
+    padding-left: 30px;
+    z-index: 1000;
+}

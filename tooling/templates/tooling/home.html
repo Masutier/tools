@@ -1,0 +1,44 @@
+{% extends 'tooling/layout.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-12 mt-5 c">
+    <h1>Python Tools For Diferent Purposes</h1>
+</div>
+
+<div class="col-11 mx-auto mt-5">
+    <div class="row">
+        <div class="col-5 mx-auto c">
+            <a class="nav-link atxt1" href="{% url 'xlsTool' %}">
+                <img src="{% static '/img/xls.png' %}" class="imgico" alt="XLSX" />
+            </a>
+            <h3>.XLSX files Manipulaction</h3>
+            <p>This section show how to manipulate .xlsx files, how to create, insert new data in new columns 
+                make math operations and more.</p>
+        </div>
+
+        <div class="col-5 mx-auto c">
+            <a class="nav-link atxt1" href="{% url 'pdfTool' %}">
+                <img src="{% static '/img/pdf.png' %}" class="imgico" alt="CSV" />
+            </a>
+            <h3>.PDF files Manipulaction</h3>
+            <p>This section show how to create, read and modify .pdf files.</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-11 mx-auto mt-5 mb-5">
+    <div class="row">
+
+        <div class="col-5 mx-auto c">
+            <a class="nav-link atxt1" href="{% url 'mailTool' %}">
+                <img src="{% static '/img/mail-send.png' %}" class="imgico" alt="Mail" />
+            </a>
+            <h3>Send Email</h3>
+            <p>This section show how to send emails.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
