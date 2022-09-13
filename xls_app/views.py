@@ -79,9 +79,9 @@ def createNewXls(request):
             openFile = request.FILES['inputSecondXlsx'] # Llamar el segundo archivo y guardarlo en docs
             newTwoFile = pd.read_excel(openFile)
             newTwoFile = newTwoFile.drop_duplicates(keep='first') # borrar filas repetidas
-            allDataMerge = pd.merge(newOneFile, newTwoFile, on='Nombre del Flujo', how='outer') # unir los archivos 
-            allDataMerge['Total'] = allDataMerge.iloc[:, 1:12].sum(axis=1) # Sum columns
-            allDataMerge.to_excel('static/docs/xlsx_All.xlsx', 'Top_All', index=False) # create and save xlsx_All.xlsx
+            allDataMerge = pd.merge(newOneFile, newTwoFile, on='EmpID', how='outer') # unir los archivos 
+            allDataMerge['UserName'] = allDataMerge.iloc[:, 1:12].sum(axis=1) # Sum columns
+            allDataMerge.to_excel('static/docs/xlsx_All.xlsx', '100RecordsHumanResources', index=False) # create and save xlsx_All.xlsx
             column_names=allDataMerge.columns.values
             row_data=list(allDataMerge.values.tolist())
             context = {

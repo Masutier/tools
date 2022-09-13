@@ -59,7 +59,7 @@ WSGI_APPLICATION = 'tools.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'my_home.db'),
+        'NAME': os.path.join(BASE_DIR, 'tools.db'),
     }
 }
 
@@ -82,8 +82,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config['EMAIL_USER'] # info.zanahora@gmail.com
-EMAIL_HOST_PASSWORD = config['EMAIL_PASSWORD']
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER') # info.zanahora@gmail.com
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 LANGUAGE_CODE = 'en-us'
 
