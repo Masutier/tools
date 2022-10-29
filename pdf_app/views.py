@@ -5,10 +5,11 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from pdf2image import convert_from_path, convert_from_bytes
+from PyPDF2 import PdfFileReader, PdfFileWriter, PdfReader
 from .utils import *
 
 destiny_path = "/home/gabriel/Downloads/catalogRossy/destiny/"
-origen_path = "/home/gabriel/Downloads/"
+origen_path = "/home/gabriel/Downloads/catalogRossy/"
 
 
 def pdfTool(request):
@@ -27,7 +28,10 @@ def pdfTool(request):
 
 # brake down pdf into jpg images
 def pdfLoad(request):
-    count = 0
+    count += 1
+    count1 = 0
+    count2 = 100
+    count3 = 200
     catalogList = []
 
     if request.method == 'POST':
@@ -36,55 +40,58 @@ def pdfLoad(request):
         month = request.POST['mes']
         nameFile = pdfFile.name
         fileNamex = nameFile.split('.')
-        images = convert_from_bytes(open(origen_path + nameFile, 'rb').read())
+        file_tp_pross = origen_path + nameFile
 
-        if user_answer == "AllSave":
-            crearFolder(destiny_path, fileNamex, month)
-            if len(images) <= 100:
-                for imag in images:
-                    count += 1
-                    if imag.width > 1000:
-                        new_img = (1000, None)
-                        imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
-                    else:
-                        imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
-                    catalogList.append(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg')
-            else:
-                cicle = round(len(images) / 50) + 1
-                start = 0
-                stop = 50
-                while cicle:
-                    pages = convert_from_path(origen_path + nameFile, dpi=800, size=(1000, None), fmt="jpeg", output_folder=destiny_path + fileNamex[0] + "_" + month + "/", output_file=fileNamex[0] + "_" + str(count) + '.jpg', first_page=start, last_page=stop)
-                    start += 51
-                    stop += 51
-                    cicle -= 1
-                for pdf in os.listdir(destiny_path + fileNamex[0] + "_" + month + "/"):
-                    jpgfile = destiny_path + fileNamex[0] + "_" + month + "/" + pdf
-                    catalogList.append(jpgfile)
-                    catalog = fileNamex[0]
-            goDrive(catalog, catalogList)
-            return redirect('/pdfTool')
+        #OPEN FILE
+        with open(file_tp_pross, "rb") as f:
+            reader = PdfFileReader(f)
 
-        if user_answer == "Compu":
-            crearFolder(destiny_path, fileNamex, month)
-            if len(images) <= 100:
-                for imag in images:
-                    count += 1
-                    if imag.width > 1000:
-                        new_img = (1000, None)
-                        imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
-                    else:
-                        imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
-            else:
-                cicle = round(len(images) / 50) + 1
-                start = 0
-                stop = 50
-                while cicle:
-                    pages = convert_from_path(origen_path + nameFile, dpi=800, size=(1000, None), fmt="jpeg", output_folder=destiny_path + fileNamex[0] + "_" + month + "/", output_file=fileNamex[0] + "_" + str(count) + '.jpg', first_page=start, last_page=stop)
-                    start += 51
-                    stop += 51
-                    cicle -= 1
-            return redirect('/pdfTool')
+            if len(reader.pages) > 180 or len(reader.pages) < 300:
+                part1 = PdfFileWriter()
+                part2 = PdfFileWriter()
+                part3 = PdfFileWriter()
+
+                first = list(range(0, 100))
+                second = list(range(100, 200))
+                third = list(range(200, 300))
+
+                for page in range(len(reader.pages)):
+                    if page in first:
+                        count1 += 1
+                        part1.addPage(reader.getPage(page))
+
+                    if page in second:
+                        count2 += 1
+                        part2.addPage(reader.getPage(page))
+
+                    if page in third:
+                        count3 += 1
+                        part3.addPage(reader.getPage(page))
+
+                if part1:
+                    with open(origen_path + "/" + "part1.pdf", "wb") as f2:
+                        part1.write(f2)
+
+                if part2:
+                    with open(origen_path + "/" + "part2.pdf", "wb") as f3:
+                        part2.write(f3)
+
+                if part3:
+                    with open(origen_path + "/" + "part3.pdf", "wb") as f4:
+                        part3.write(f4)
+
+                if user_answer == "Compu":
+                    crearFolder(destiny_path, fileNamex, month)
+                    part1Pdf = convert_from_path(origen_path + "part1.pdf", dpi=800)
+                    for idx, imag in enumerate(part1Pdf):
+                        if imag.width > 800:
+                            new_img = (800, None)
+                            imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
+                        else:
+                            imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
+
+                    return redirect('/pdfTool')
+
     return render(request, 'pdf_app/pdfLoad.html')
 
 
