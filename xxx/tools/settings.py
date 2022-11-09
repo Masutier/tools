@@ -1,18 +1,17 @@
 import os
 import json
+import dotenv
+
 from pathlib import Path
-
-
-with open("/home/gabriel/prog/json_config/tools.json") as config_file:
-    config = json.load(config_file)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = config['SECRET_KEY']
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+if not DEBUG:
+    ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOST')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -83,11 +82,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config['EMAIL_USER']# info.zanahora@gmail.com
-EMAIL_HOST_PASSWORD = config['EMAIL_PASSWORD']
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER') # info.zanahora@gmail.com
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'America/Bogota'
+
 USE_I18N = True
 USE_TZ = True
 
@@ -96,8 +97,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 SESSION_COOKIE_AGE = 21600
 SESSION_COOKIE_SAMESITE = None
@@ -111,4 +112,6 @@ SECURE_SSL_REDIRECT = False
 SECURE_HSTS_PRELOAD = True
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

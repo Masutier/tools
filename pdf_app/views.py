@@ -26,12 +26,14 @@ def pdfTool(request):
         return render(request, 'pdf_app/pdfTool.html', context)
 
 
-# brake down pdf into jpg images
 def pdfLoad(request):
-    count += 1
-    count1 = 0
-    count2 = 100
-    count3 = 200
+    count = 0
+    firstcount = 0
+    secondcount = 0
+    thirdcount = 0
+    fourthcount = 0
+    fifthcount = 0
+    sixthcount = 0
     catalogList = []
 
     if request.method == 'POST':
@@ -42,55 +44,106 @@ def pdfLoad(request):
         fileNamex = nameFile.split('.')
         file_tp_pross = origen_path + nameFile
 
-        #OPEN FILE
-        with open(file_tp_pross, "rb") as f:
-            reader = PdfFileReader(f)
+        if user_answer == "Compu":
+            crearFolder(destiny_path, fileNamex, month)
 
-            if len(reader.pages) > 180 or len(reader.pages) < 300:
+            with open(file_tp_pross, "rb") as f:
+                reader = PdfFileReader(f)
+
                 part1 = PdfFileWriter()
-                part2 = PdfFileWriter()
-                part3 = PdfFileWriter()
+                first = list(range(0, 51))
 
-                first = list(range(0, 100))
-                second = list(range(100, 200))
-                third = list(range(200, 300))
+                part2 = PdfFileWriter()
+                second = list(range(50, 101))
+
+                part3 = PdfFileWriter()
+                third = list(range(100, 151))
+
+                part4 = PdfFileWriter()
+                fourth = list(range(150, 201))
+
+                part5 = PdfFileWriter()
+                fifth = list(range(200, 251))
+                
+                part6 = PdfFileWriter()
+                sixth = list(range(250, 301))
 
                 for page in range(len(reader.pages)):
                     if page in first:
                         count1 += 1
                         part1.addPage(reader.getPage(page))
+                        firstcount = 1
 
                     if page in second:
                         count2 += 1
                         part2.addPage(reader.getPage(page))
+                        secondcount = 1
 
                     if page in third:
                         count3 += 1
                         part3.addPage(reader.getPage(page))
+                        thirdcount = 1
 
-                if part1:
-                    with open(origen_path + "/" + "part1.pdf", "wb") as f2:
+                    if page in fourth:
+                        count4 += 1
+                        part4.addPage(reader.getPage(page))
+                        fourthcount = 1
+                    
+                    if page in fifth:
+                        count5 += 1
+                        part5.addPage(reader.getPage(page))
+                        fifthcount = 1
+
+                    if page in sixth:
+                        count6 += 1
+                        part6.addPage(reader.getPage(page))
+                        sixthcount = 1
+
+                peaceOut = destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0]
+
+                if firstcount == 1:
+                    with open(origen_path + "/" + fileNamex[0] + "_part1.pdf", "wb") as f2:
                         part1.write(f2)
+                    count = 0
+                    peace = origen_path + "/" + fileNamex[0] + "_part1.pdf"
+                    imagensAll(count, peace, peaceOut)
 
-                if part2:
-                    with open(origen_path + "/" + "part2.pdf", "wb") as f3:
+                if secondcount == 1:
+                    with open(origen_path + "/" + fileNamex[0] + "_part2.pdf", "wb") as f3:
                         part2.write(f3)
+                    count = 50
+                    peace = origen_path + "/" + fileNamex[0] + "_part2.pdf"
+                    imagensAll(count, peace, peaceOut)
 
-                if part3:
-                    with open(origen_path + "/" + "part3.pdf", "wb") as f4:
+                if thirdcount == 1:
+                    with open(origen_path + "/" + fileNamex[0] + "_part3.pdf", "wb") as f4:
                         part3.write(f4)
+                    count = 100
+                    peace = origen_path + "/" + fileNamex[0] + "_part3.pdf"
+                    imagensAll(count, peace, peaceOut)
 
-                if user_answer == "Compu":
-                    crearFolder(destiny_path, fileNamex, month)
-                    part1Pdf = convert_from_path(origen_path + "part1.pdf", dpi=800)
-                    for idx, imag in enumerate(part1Pdf):
-                        if imag.width > 800:
-                            new_img = (800, None)
-                            imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
-                        else:
-                            imag.save(destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0] + "_" + str(count) + '.jpg', 'JPEG', quality=95)
+                if fourthcount == 1:
+                    with open(origen_path + "/" + fileNamex[0] + "_part4.pdf", "wb") as f5:
+                        part4.write(f5)
+                    count = 150
+                    peace = origen_path + "/" + fileNamex[0] + "_part4.pdf"
+                    imagensAll(count, peace, peaceOut)
 
-                    return redirect('/pdfTool')
+                if fifthcount == 1:
+                    with open(origen_path + "/" + fileNamex[0] + "_part5.pdf", "wb") as f6:
+                        part5.write(f6)
+                    count = 200
+                    peace = origen_path + "/" + fileNamex[0] + "_part5.pdf"
+                    imagensAll(count, peace, peaceOut)
+
+                if sixthcount == 1:
+                    with open(origen_path + "/" + fileNamex[0] + "_part6.pdf", "wb") as f6:
+                        part6.write(f6)
+                    count = 250
+                    peace = origen_path + "/" + fileNamex[0] + "_part6.pdf"
+                    imagensAll(count, peace, peaceOut)
+
+            return redirect('/pdfTool')
 
     return render(request, 'pdf_app/pdfLoad.html')
 
