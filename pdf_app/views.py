@@ -26,8 +26,15 @@ def pdfTool(request):
         return render(request, 'pdf_app/pdfTool.html', context)
 
 
+# brake down pdf into jpg images
 def pdfLoad(request):
     count = 0
+    count1 = 0
+    count2 = 50
+    count3 = 100
+    count4 = 150
+    count5 = 200
+    count6 = 250
     firstcount = 0
     secondcount = 0
     thirdcount = 0
@@ -47,6 +54,7 @@ def pdfLoad(request):
         if user_answer == "Compu":
             crearFolder(destiny_path, fileNamex, month)
 
+            #OPEN FILE
             with open(file_tp_pross, "rb") as f:
                 reader = PdfFileReader(f)
 
@@ -102,45 +110,45 @@ def pdfLoad(request):
                 peaceOut = destiny_path + fileNamex[0] + "_" + month + "/" + fileNamex[0]
 
                 if firstcount == 1:
-                    with open(origen_path + "/" + fileNamex[0] + "_part1.pdf", "wb") as f2:
+                    peace = origen_path + "/" + fileNamex[0] + "_part1.pdf"
+                    with open(peace, "wb") as f2:
                         part1.write(f2)
                     count = 0
-                    peace = origen_path + "/" + fileNamex[0] + "_part1.pdf"
                     imagensAll(count, peace, peaceOut)
 
                 if secondcount == 1:
-                    with open(origen_path + "/" + fileNamex[0] + "_part2.pdf", "wb") as f3:
+                    peace = origen_path + "/" + fileNamex[0] + "_part2.pdf"
+                    with open(peace, "wb") as f3:
                         part2.write(f3)
                     count = 50
-                    peace = origen_path + "/" + fileNamex[0] + "_part2.pdf"
                     imagensAll(count, peace, peaceOut)
 
                 if thirdcount == 1:
-                    with open(origen_path + "/" + fileNamex[0] + "_part3.pdf", "wb") as f4:
+                    peace = origen_path + "/" + fileNamex[0] + "_part3.pdf"
+                    with open(peace, "wb") as f4:
                         part3.write(f4)
                     count = 100
-                    peace = origen_path + "/" + fileNamex[0] + "_part3.pdf"
                     imagensAll(count, peace, peaceOut)
 
                 if fourthcount == 1:
-                    with open(origen_path + "/" + fileNamex[0] + "_part4.pdf", "wb") as f5:
+                    peace = origen_path + "/" + fileNamex[0] + "_part4.pdf"
+                    with open(peace, "wb") as f5:
                         part4.write(f5)
                     count = 150
-                    peace = origen_path + "/" + fileNamex[0] + "_part4.pdf"
                     imagensAll(count, peace, peaceOut)
 
                 if fifthcount == 1:
-                    with open(origen_path + "/" + fileNamex[0] + "_part5.pdf", "wb") as f6:
+                    peace = origen_path + "/" + fileNamex[0] + "_part5.pdf"
+                    with open(peace, "wb") as f6:
                         part5.write(f6)
                     count = 200
-                    peace = origen_path + "/" + fileNamex[0] + "_part5.pdf"
                     imagensAll(count, peace, peaceOut)
 
                 if sixthcount == 1:
-                    with open(origen_path + "/" + fileNamex[0] + "_part6.pdf", "wb") as f6:
+                    peace = origen_path + "/" + fileNamex[0] + "_part6.pdf"
+                    with open(peace, "wb") as f6:
                         part6.write(f6)
                     count = 250
-                    peace = origen_path + "/" + fileNamex[0] + "_part6.pdf"
                     imagensAll(count, peace, peaceOut)
 
             return redirect('/pdfTool')
